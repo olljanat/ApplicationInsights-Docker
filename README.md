@@ -9,6 +9,17 @@ The Application Insights container talks to the Docker agent and sends telemetry
 This repo contains the source code for Application Insights for Docker image.
 For more information, see [Application Insights for Docker image homepage][appinsights-docker-image] in Docker Hub.
 
+## Build
+### Build Linux version
+```
+docker build . -f Dockerfile.stretch -t microsoft/applicationinsights:0.9.3-stretch
+```
+
+### Build Windows version
+```
+.\build_nanoserver.ps1
+```
+
 
 ##Microsoft Open Source Code of Conduct
 

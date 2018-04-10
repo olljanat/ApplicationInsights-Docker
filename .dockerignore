@@ -1,0 +1,5 @@
+.dockerignore
+.gitignore
+build_nanoserver.ps1
+Dockerfile.nanoserver-sac2016
+Dockerfile.stretch
