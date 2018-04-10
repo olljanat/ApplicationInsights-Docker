@@ -4,8 +4,8 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop';"]
 COPY . /src/
 WORKDIR /src/
 RUN	Setx path \"%path%;C:\Src\Python36;C:\Src\Python36\Scripts\"
-RUN python -m pip install python-dateutil; \
-	python -m pip install docker==3.2.1; \
+RUN python -m pip install python-dateutil==2.4.2; \
+	python -m pip install docker-py==1.10.6a1; \
 	.\gradlew.bat shadow
 
 WORKDIR /src/build/docker/

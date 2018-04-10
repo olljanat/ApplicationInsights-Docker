@@ -43,8 +43,8 @@ public class MetricCollectionPythonBoostrapper extends PythonBootstrapper<Metric
         super(bootstrapperParams);
     }
 
-    public MetricCollectionPythonBoostrapper(int collectInterval) {
-        this(BOOTSTRAPPER_ARG, generateCollectIntervalArgument(collectInterval));
+    public MetricCollectionPythonBoostrapper(int collectInterval, String dockerSocket) {
+        this(BOOTSTRAPPER_ARG, generateCollectIntervalArgument(collectInterval), (String.format("--socket=", dockerSocket)));
     }
 
     // endregion Ctors

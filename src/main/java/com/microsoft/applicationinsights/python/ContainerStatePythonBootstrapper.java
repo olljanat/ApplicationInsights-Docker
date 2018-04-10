@@ -43,8 +43,8 @@ public class ContainerStatePythonBootstrapper extends PythonBootstrapper<StatePr
         super(bootstrapperParams);
     }
 
-    public ContainerStatePythonBootstrapper() {
-        this(BOOTSTRAPPER_ARG);
+    public ContainerStatePythonBootstrapper(String dockerSocket) {
+        this(BOOTSTRAPPER_ARG, (String.format("--socket=", dockerSocket)));
     }
 
     // endregion Ctors

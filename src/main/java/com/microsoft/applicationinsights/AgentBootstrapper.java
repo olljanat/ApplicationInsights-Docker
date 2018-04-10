@@ -43,7 +43,7 @@ public class AgentBootstrapper {
 
     private static final int DEFAULT_COLLECT_INTERVAL = 45;
     private static final String CONTAINER_USAGE_COMMAND =
-            "docker run -v /var/run/docker.sock:/docker.sock -d microsoft/applicationinsights ikey=<Instrumentation_Key>";
+            "docker run -v /var/run/docker.sock:/docker.sock -d microsoft/applicationinsights ikey=<Instrumentation_Key> socket=unix:///var/run/docker.sock";
 
     // endregion Consts
 
@@ -59,15 +59,20 @@ public class AgentBootstrapper {
 
             return;
         }
+		
+        String dockerSocket = argumentsMap.get("socket");
+        if (dockerSocket == null) {
+            dockerSocket = "unix:///var/run/docker.sock";
+        }
 
         // TODO: Create object for argument verification (type, existence, default value etc.)
         ApplicationInsightsSender applicationInsightsSender = new ApplicationInsightsSender(instrumentationKey);
 
         int sampleRateFromArgument = getSampleRateFromArgument(argumentsMap);
-        PythonBootstrapper metricCollectionBootstrapper = new MetricCollectionPythonBoostrapper(sampleRateFromArgument);
+        PythonBootstrapper metricCollectionBootstrapper = new MetricCollectionPythonBoostrapper(sampleRateFromArgument, dockerSocket);
         Thread metricCollectionAgentThread = createMetricCollectionProcess(applicationInsightsSender, metricCollectionBootstrapper);
 
-        PythonBootstrapper containerStateBootstrapper = new ContainerStatePythonBootstrapper();
+        PythonBootstrapper containerStateBootstrapper = new ContainerStatePythonBootstrapper(dockerSocket);
         Thread containerStateThread = createContainerStateProcess(applicationInsightsSender, containerStateBootstrapper);
 
         Thread containerContextAgentThread = createContainerContextProcess();
