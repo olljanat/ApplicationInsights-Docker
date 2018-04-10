@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+Python36/*
 
 #Visual Studio files
 *.o
